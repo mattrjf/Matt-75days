@@ -19,29 +19,59 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 30px;
+            padding: 18px;
         }
 
         h1 {
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
-            font-size: 2.5em;
+            margin-bottom: 16px;
+            font-size: 2em;
+        }
+
+        .start-date-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .start-date-bar label {
+            font-weight: 600;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .start-date-bar input[type="date"] {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .start-date-note {
+            font-size: 12px;
+            color: #666;
         }
 
         .controls {
             display: flex;
-            gap: 12px;
-            margin-bottom: 50px;
-            margin-top: 80px;
+            gap: 8px;
+            margin-bottom: 24px;
+            margin-top: 14px;
             flex-wrap: wrap;
             justify-content: flex-start;
-            padding: 25px;
+            padding: 12px;
             background: #f0f0f0;
             border-radius: 10px;
             border-left: 5px solid #667eea;
@@ -56,13 +86,13 @@
         }
 
         button {
-            padding: 12px 16px;
+            padding: 8px 12px;
             background: #667eea;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             transition: background 0.3s;
             white-space: nowrap;
             min-width: fit-content;
@@ -95,43 +125,64 @@
         th {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px;
+            padding: 8px;
             text-align: left;
             font-weight: 600;
             position: sticky;
             left: 0;
             z-index: 10;
+            font-size: 12px;
         }
 
         td {
-            padding: 12px;
+            padding: 6px;
             border: 1px solid #e0e0e0;
             text-align: center;
+            font-size: 12px;
         }
 
         .task-name {
             background: #f8f9fa;
             font-weight: 500;
             color: #333;
-            min-width: 150px;
+            min-width: 120px;
             word-break: break-word;
+            font-size: 12px;
         }
 
         .day-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             font-weight: 600;
-            min-width: 50px;
+            min-width: 42px;
         }
 
         .day-number {
-            font-size: 12px;
+            font-size: 10px;
             opacity: 0.9;
         }
 
+        .day-date {
+            font-size: 9px;
+            opacity: 0.85;
+        }
+
+        .select-all-row th {
+            font-size: 11px;
+            padding: 6px;
+            background: #5c73d6;
+        }
+
+        .day-select-all {
+            width: 14px;
+            height: 14px;
+            accent-color: #27ae60;
+            cursor: pointer;
+        }
+
         input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
             accent-color: #667eea;
             transition: transform 0.2s;
@@ -152,34 +203,34 @@
         .status-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-            padding-top: 30px;
+            gap: 10px;
+            margin-top: 18px;
+            padding-top: 16px;
             border-top: 2px solid #e0e0e0;
         }
 
         .stat-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 12px;
             border-radius: 10px;
             text-align: center;
         }
 
         .stat-label {
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.9;
             margin-bottom: 5px;
         }
 
         .stat-value {
-            font-size: 2em;
+            font-size: 1.5em;
             font-weight: bold;
         }
 
         .weight-tracker {
-            margin-bottom: 60px;
-            padding: 25px;
+            margin-bottom: 18px;
+            padding: 12px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 2px solid #27ae60;
@@ -188,21 +239,21 @@
 
         .weight-tracker h3 {
             color: #333;
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 10px;
+            font-size: 16px;
         }
 
         .weight-tracker > button {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             display: block;
         }
 
         .weight-input-wrapper {
             display: none;
-            gap: 12px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
-            padding: 15px;
+            padding: 10px;
             background: white;
             border-radius: 8px;
             border: 1px solid #ddd;
@@ -213,19 +264,19 @@
         }
 
         .weight-input-wrapper input[type="number"] {
-            padding: 12px;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 14px;
-            width: 150px;
+            font-size: 13px;
+            width: 130px;
             flex: 0 0 auto;
         }
 
         .weight-input-wrapper input[type="date"] {
-            padding: 12px;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 14px;
+            font-size: 13px;
             flex: 0 0 auto;
         }
 
@@ -235,17 +286,42 @@
 
         #weightChartContainer {
             background: white;
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
             border: 1px solid #e0e0e0;
             clear: both;
-            margin-top: 20px;
-            margin-bottom: 40px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         #weightChartContainer svg {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .weight-history-wrap {
+            margin-top: 10px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .weight-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            table-layout: fixed;
+        }
+
+        .weight-history-table th,
+        .weight-history-table td {
+            padding: 6px;
+            border: 1px solid #ddd;
         }
 
         .progress-bar {
@@ -264,7 +340,7 @@
         }
 
         .week-section {
-            margin-bottom: 25px;
+            margin-bottom: 12px;
             border: 2px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
@@ -274,7 +350,7 @@
         .week-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px;
+            padding: 10px;
             cursor: pointer;
             font-weight: bold;
             display: flex;
@@ -282,6 +358,7 @@
             align-items: center;
             user-select: none;
             transition: background 0.3s;
+            font-size: 13px;
         }
 
         .week-header:hover {
@@ -312,11 +389,234 @@
             border: none;
             border-radius: 0;
         }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin-bottom: 14px;
+            }
+
+            .start-date-bar {
+                padding: 8px 10px;
+                gap: 8px;
+            }
+
+            .start-date-bar label,
+            .start-date-note {
+                font-size: 12px;
+            }
+
+            .controls {
+                margin-top: 12px;
+                margin-bottom: 20px;
+                padding: 10px;
+                gap: 6px;
+                justify-content: center;
+            }
+
+            .controls button {
+                padding: 8px 9px;
+                font-size: 11px;
+                flex: 1;
+                min-width: 78px;
+            }
+
+            button {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .weight-tracker {
+                margin-bottom: 30px;
+                padding: 15px;
+            }
+
+            .weight-tracker h3 {
+                margin-bottom: 12px;
+                font-size: 16px;
+            }
+
+            .weight-input-wrapper {
+                gap: 8px;
+                margin-bottom: 15px;
+                padding: 12px;
+                flex-direction: column;
+            }
+
+            .weight-input-wrapper input[type="number"],
+            .weight-input-wrapper input[type="date"] {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .weight-input-wrapper button {
+                width: 100%;
+            }
+
+            #weightChartContainer {
+                padding: 15px;
+                overflow-x: auto;
+            }
+
+            #weightChartContainer svg {
+                min-width: 100%;
+            }
+
+            .week-section {
+                margin-bottom: 15px;
+            }
+
+            .week-header {
+                padding: 9px;
+                font-size: 12px;
+            }
+
+            .week-header .toggle-icon {
+                font-size: 16px;
+            }
+
+            .week-content .tracker-wrapper {
+                overflow-x: auto;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 5px;
+            }
+
+            .task-name {
+                min-width: 92px;
+                font-size: 11px;
+                padding: 5px;
+            }
+
+            .day-header {
+                min-width: 36px;
+                padding: 5px 3px;
+                font-size: 9px;
+            }
+
+            .day-number {
+                font-size: 8px;
+            }
+
+            input[type="checkbox"] {
+                width: 15px;
+                height: 15px;
+            }
+
+            .status-bar {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-top: 30px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .stat-value {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.3em;
+                margin-bottom: 12px;
+            }
+
+            .controls {
+                margin-top: 20px;
+                padding: 12px;
+                gap: 6px;
+            }
+
+            .controls button {
+                padding: 7px 8px;
+                font-size: 10px;
+                min-width: 72px;
+            }
+
+            button {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            .weight-tracker {
+                padding: 12px;
+            }
+
+            .weight-input-wrapper {
+                padding: 10px;
+                gap: 6px;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .task-name {
+                min-width: 70px;
+                font-size: 9px;
+                word-break: break-word;
+            }
+
+            .week-header {
+                font-size: 11px;
+            }
+
+            .status-bar {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .stat-value {
+                font-size: 1.3em;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>75 Day Challenge Tracker</h1>
+
+        <div class="start-date-bar">
+            <label for="startDateInput">Challenge Start Date</label>
+            <input type="date" id="startDateInput" onchange="handleStartDateChange()">
+            <span class="start-date-note">Day 1 will be this date.</span>
+        </div>
 
         <div class="weight-tracker">
             <h3>Weight Loss Tracker</h3>
@@ -327,10 +627,14 @@
                 <button onclick="saveWeight()">Save</button>
                 <button onclick="toggleWeightInput()" style="background: #e74c3c;">Cancel</button>
             </div>
-            <div id="weightChartContainer" style="width: 100%; max-height: 300px;"></div>
+            <div id="weightChartContainer" style="width: 100%;"></div>
         </div>
 
         <div class="controls">
+            <button onclick="connectDataFile()">Connect Data File</button>
+            <button onclick="saveToConnectedFile()">Save To File</button>
+            <button onclick="loadFromConnectedFile()">Load From File</button>
+            <button id="autoSaveBtn" onclick="toggleAutoFileSave()">Auto File Save: Off</button>
             <button onclick="expandAllWeeks()">Expand All Weeks</button>
             <button onclick="collapseAllWeeks()">Collapse All Weeks</button>
             <button onclick="clearAllChecks()">Clear All Checks</button>
@@ -367,9 +671,57 @@
     <script>
         const DAYS = 75;
         const STORAGE_KEY = 'challenge_data';
+        const WEIGHT_KEY = 'weight_data';
 
         let tasks = ['Follow A Healthy Diet', 'Indoor Workout - 45 Mins', 'Outdoor Workout - 45 Mins', 'Drink 1 Gallon Of Water', 'Read 10 Pages Of A Book', 'No Drinking Alcohol', 'Take Progress Pictures'];
         let checks = {};
+        let startDate = '';
+        let weightData = [];
+        let dataFileHandle = null;
+        let autoFileSaveEnabled = false;
+
+        function getTodayISODate() {
+            const now = new Date();
+            const tzOffset = now.getTimezoneOffset() * 60000;
+            return new Date(now.getTime() - tzOffset).toISOString().slice(0, 10);
+        }
+
+        function getDateForChallengeDay(day) {
+            if (!startDate) {
+                return null;
+            }
+            const d = new Date(startDate + 'T00:00:00');
+            d.setDate(d.getDate() + day - 1);
+            return d;
+        }
+
+        function formatShortDate(dateObj) {
+            return `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
+        }
+
+        function getCurrentDayFromStart() {
+            if (!startDate) {
+                return 0;
+            }
+            const start = new Date(startDate + 'T00:00:00');
+            const today = new Date();
+            const todayOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const diff = Math.floor((todayOnly - start) / (1000 * 60 * 60 * 24));
+            if (diff < 0) {
+                return 0;
+            }
+            return Math.min(diff + 1, DAYS);
+        }
+
+        function handleStartDateChange() {
+            const value = document.getElementById('startDateInput').value;
+            if (!value) {
+                return;
+            }
+            startDate = value;
+            saveData();
+            render();
+        }
 
         function initStorage() {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -377,8 +729,15 @@
                 const data = JSON.parse(saved);
                 tasks = data.tasks || tasks;
                 checks = data.checks || {};
+                startDate = data.startDate || getTodayISODate();
             } else {
+                startDate = getTodayISODate();
                 resetChecks();
+            }
+
+            const startDateInput = document.getElementById('startDateInput');
+            if (startDateInput) {
+                startDateInput.value = startDate;
             }
         }
 
@@ -393,12 +752,156 @@
         }
 
         function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ tasks, checks }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ tasks, checks, startDate }));
+            triggerAutoFileSave();
         }
 
-        // Weight tracking functions
-        const WEIGHT_KEY = 'weight_data';
-        let weightData = [];
+        function saveWeightDataLocal() {
+            localStorage.setItem(WEIGHT_KEY, JSON.stringify(weightData));
+            triggerAutoFileSave();
+        }
+
+        function getCombinedData() {
+            return {
+                version: 2,
+                updatedAt: new Date().toISOString(),
+                challenge: {
+                    tasks,
+                    checks,
+                    startDate
+                },
+                weightData
+            };
+        }
+
+        function applyCombinedData(data) {
+            if (data.challenge) {
+                tasks = Array.isArray(data.challenge.tasks) ? data.challenge.tasks : tasks;
+                checks = data.challenge.checks || checks;
+                startDate = data.challenge.startDate || startDate || getTodayISODate();
+            } else {
+                // Backward compatibility with older exports
+                tasks = Array.isArray(data.tasks) ? data.tasks : tasks;
+                checks = data.checks || checks;
+                startDate = data.startDate || startDate || getTodayISODate();
+            }
+
+            weightData = Array.isArray(data.weightData) ? data.weightData : weightData;
+
+            if (!Object.keys(checks).length) {
+                resetChecks();
+            }
+
+            const startDateInput = document.getElementById('startDateInput');
+            if (startDateInput) {
+                startDateInput.value = startDate;
+            }
+        }
+
+        function browserSupportsFileAccess() {
+            return 'showOpenFilePicker' in window && 'showSaveFilePicker' in window;
+        }
+
+        async function connectDataFile() {
+            if (!browserSupportsFileAccess()) {
+                alert('Your browser does not support direct file linking. Use Export/Import instead.');
+                return;
+            }
+
+            try {
+                const [handle] = await window.showOpenFilePicker({
+                    types: [{
+                        description: 'JSON Data File',
+                        accept: { 'application/json': ['.json'] }
+                    }],
+                    excludeAcceptAllOption: true,
+                    multiple: false
+                });
+                dataFileHandle = handle;
+                alert('Data file connected. You can now Load From File and Save To File.');
+            } catch (err) {
+                if (err && err.name !== 'AbortError') {
+                    alert('Could not connect file: ' + err.message);
+                }
+            }
+        }
+
+        async function saveToConnectedFile() {
+            if (!browserSupportsFileAccess()) {
+                alert('Your browser does not support direct file saving. Use Export Data instead.');
+                return;
+            }
+
+            try {
+                if (!dataFileHandle) {
+                    dataFileHandle = await window.showSaveFilePicker({
+                        suggestedName: '75days-data.json',
+                        types: [{
+                            description: 'JSON Data File',
+                            accept: { 'application/json': ['.json'] }
+                        }]
+                    });
+                }
+
+                const writable = await dataFileHandle.createWritable();
+                await writable.write(JSON.stringify(getCombinedData(), null, 2));
+                await writable.close();
+            } catch (err) {
+                if (err && err.name !== 'AbortError') {
+                    alert('Could not save file: ' + err.message);
+                }
+            }
+        }
+
+        async function loadFromConnectedFile() {
+            if (!browserSupportsFileAccess()) {
+                alert('Your browser does not support direct file loading. Use Import Data instead.');
+                return;
+            }
+
+            try {
+                if (!dataFileHandle) {
+                    const [handle] = await window.showOpenFilePicker({
+                        types: [{
+                            description: 'JSON Data File',
+                            accept: { 'application/json': ['.json'] }
+                        }],
+                        excludeAcceptAllOption: true,
+                        multiple: false
+                    });
+                    dataFileHandle = handle;
+                }
+
+                const file = await dataFileHandle.getFile();
+                const text = await file.text();
+                const data = JSON.parse(text);
+
+                applyCombinedData(data);
+                saveData();
+                saveWeightDataLocal();
+                renderWeightChart();
+                render();
+                alert('Data loaded from file.');
+            } catch (err) {
+                if (err && err.name !== 'AbortError') {
+                    alert('Could not load file: ' + err.message);
+                }
+            }
+        }
+
+        function toggleAutoFileSave() {
+            autoFileSaveEnabled = !autoFileSaveEnabled;
+            const btn = document.getElementById('autoSaveBtn');
+            if (btn) {
+                btn.textContent = 'Auto File Save: ' + (autoFileSaveEnabled ? 'On' : 'Off');
+            }
+        }
+
+        function triggerAutoFileSave() {
+            if (autoFileSaveEnabled && dataFileHandle) {
+                saveToConnectedFile();
+            }
+        }
 
         function initWeightData() {
             const saved = localStorage.getItem(WEIGHT_KEY);
@@ -436,7 +939,7 @@
             weightData.sort((a, b) => new Date(a.date) - new Date(b.date));
             
             // Save and render
-            localStorage.setItem(WEIGHT_KEY, JSON.stringify(weightData));
+            saveWeightDataLocal();
             renderWeightChart();
             toggleWeightInput();
             document.getElementById('weightInput').value = '';
@@ -459,7 +962,7 @@
             const width = container.offsetWidth - 40;
             const height = 250;
             const pointRadius = 5;
-            const graphPadding = 40;
+            const graphPadding = 26;
             
             let svg = `<svg width="${width}" height="${height}" style="border: 1px solid #ddd; border-radius: 5px;">`;
             
@@ -483,7 +986,9 @@
             const graphHeight = height - 40;
             
             for (let i = 0; i < weightData.length; i++) {
-                const x = graphPadding + (i / (weightData.length - 1 || 1)) * graphWidth;
+                const x = weightData.length === 1
+                    ? graphPadding + graphWidth / 2
+                    : graphPadding + (i / (weightData.length - 1)) * graphWidth;
                 const yNorm = (weightData[i].weight - minLabel) / (maxLabel - minLabel);
                 const y = height - 30 - yNorm * graphHeight;
                 
@@ -507,12 +1012,12 @@
             svg += '</svg>';
             
             // Add weight data table
-            let html = svg + '<div style="margin-top: 15px;"><table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #f0f0f0;"><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Date</th><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Weight</th><th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th></tr></thead><tbody>';
+            let html = svg + '<div class="weight-history-wrap"><table class="weight-history-table"><thead><tr style="background: #f0f0f0;"><th style="text-align: left;">Date</th><th style="text-align: left;">Weight</th><th style="text-align: center;">Action</th></tr></thead><tbody>';
             
             for (let i = weightData.length - 1; i >= 0; i--) {
                 const date = new Date(weightData[i].date);
                 const dateStr = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-                html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${dateStr}</td><td style="padding: 8px; border: 1px solid #ddd;">${weightData[i].weight} kg</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="deleteWeight(${i})" style="padding: 5px 10px; background: #e74c3c; font-size: 12px;">Delete</button></td></tr>`;
+                html += `<tr><td>${dateStr}</td><td>${weightData[i].weight} kg</td><td style="text-align: center;"><button onclick="deleteWeight(${i})" style="padding: 4px 8px; background: #e74c3c; font-size: 11px;">Delete</button></td></tr>`;
             }
             
             html += '</tbody></table></div>';
@@ -522,7 +1027,7 @@
         function deleteWeight(index) {
             if (confirm('Delete this weight entry?')) {
                 weightData.splice(index, 1);
-                localStorage.setItem(WEIGHT_KEY, JSON.stringify(weightData));
+                saveWeightDataLocal();
                 renderWeightChart();
             }
         }
@@ -537,9 +1042,8 @@
             container.innerHTML = '';
             
             // Calculate current week (1-based)
-            const today = new Date().getDate();
-            const currentDay = Math.min(today, DAYS);
-            const currentWeek = Math.ceil(currentDay / 7);
+            const currentDay = getCurrentDayFromStart();
+            const currentWeek = currentDay > 0 ? Math.ceil(currentDay / 7) : 1;
             
             // Create 11 weeks
             const totalWeeks = Math.ceil(DAYS / 7);
@@ -553,11 +1057,15 @@
                 
                 const weekHeader = document.createElement('div');
                 weekHeader.className = 'week-header' + (week !== currentWeek ? ' collapsed' : '');
-                weekHeader.innerHTML = `<span>Week ${week} (Days ${startDay}-${endDay})</span><span class="toggle-icon">▼</span>`;
+                const startDateObj = getDateForChallengeDay(startDay);
+                const endDateObj = getDateForChallengeDay(endDay);
+                const rangeLabel = startDateObj && endDateObj ? ` • ${formatShortDate(startDateObj)}-${formatShortDate(endDateObj)}` : '';
+                weekHeader.innerHTML = `<span>Week ${week} (Days ${startDay}-${endDay})${rangeLabel}</span><span class="toggle-icon">▼</span>`;
                 weekHeader.onclick = () => toggleWeek(weekHeader, weekContent);
                 
                 const weekContent = document.createElement('div');
                 weekContent.className = 'week-content' + (week !== currentWeek ? ' collapsed' : '');
+                weekContent.style.overflowX = 'auto';
                 
                 // Create table for this week
                 const table = document.createElement('table');
@@ -571,27 +1079,61 @@
                 const taskHeader = document.createElement('th');
                 taskHeader.className = 'task-name';
                 taskHeader.textContent = 'Task';
-                taskHeader.style.padding = '15px';
+                taskHeader.style.padding = '8px';
                 taskHeader.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
                 taskHeader.style.color = 'white';
                 taskHeader.style.fontWeight = '600';
                 taskHeader.style.textAlign = 'left';
+                taskHeader.style.fontSize = '12px';
                 headerRow.appendChild(taskHeader);
                 
                 // Add day headers for this week
                 for (let day = startDay; day <= endDay; day++) {
                     const th = document.createElement('th');
                     th.className = 'day-header';
-                    th.innerHTML = `Day<br><span class="day-number">${day}</span>`;
-                    th.style.padding = '15px';
+                    const dayDate = getDateForChallengeDay(day);
+                    const dayDateText = dayDate ? `<span class="day-date">${formatShortDate(dayDate)}</span>` : '';
+                    th.innerHTML = `Day<br><span class="day-number">${day}</span><br>${dayDateText}`;
+                    th.style.padding = '8px';
                     th.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
                     th.style.color = 'white';
                     th.style.fontWeight = '600';
-                    th.style.minWidth = '50px';
+                    th.style.minWidth = '42px';
+                    th.style.fontSize = '11px';
                     headerRow.appendChild(th);
                 }
                 
                 thead.appendChild(headerRow);
+
+                const selectAllRow = document.createElement('tr');
+                selectAllRow.className = 'select-all-row';
+                const selectLabel = document.createElement('th');
+                selectLabel.textContent = 'All';
+                selectLabel.className = 'task-name';
+                selectLabel.style.textAlign = 'left';
+                selectAllRow.appendChild(selectLabel);
+
+                for (let day = startDay; day <= endDay; day++) {
+                    const th = document.createElement('th');
+                    th.className = 'day-header';
+                    const allChecked = tasks.every((_, idx) => checks[day] && checks[day][idx]);
+                    const selectAll = document.createElement('input');
+                    selectAll.type = 'checkbox';
+                    selectAll.className = 'day-select-all';
+                    selectAll.checked = allChecked;
+                    selectAll.title = `Select all tasks for Day ${day}`;
+                    selectAll.onchange = () => {
+                        tasks.forEach((_, idx) => {
+                            checks[day][idx] = selectAll.checked;
+                        });
+                        saveData();
+                        render();
+                    };
+                    th.appendChild(selectAll);
+                    selectAllRow.appendChild(th);
+                }
+
+                thead.appendChild(selectAllRow);
                 table.appendChild(thead);
                 
                 // Add task rows
@@ -602,24 +1144,25 @@
                     const taskCell = document.createElement('td');
                     taskCell.className = 'task-name';
                     taskCell.textContent = task;
-                    taskCell.style.padding = '12px';
+                    taskCell.style.padding = '6px';
                     taskCell.style.border = '1px solid #e0e0e0';
                     taskCell.style.background = '#f8f9fa';
                     taskCell.style.fontWeight = '500';
-                    taskCell.style.minWidth = '150px';
+                    taskCell.style.minWidth = '120px';
+                    taskCell.style.fontSize = '12px';
                     row.appendChild(taskCell);
                     
                     for (let day = startDay; day <= endDay; day++) {
                         const cell = document.createElement('td');
-                        cell.style.padding = '12px';
+                        cell.style.padding = '6px';
                         cell.style.border = '1px solid #e0e0e0';
                         cell.style.textAlign = 'center';
                         
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.checked = checks[day][taskIdx] || false;
-                        checkbox.style.width = '24px';
-                        checkbox.style.height = '24px';
+                        checkbox.style.width = '18px';
+                        checkbox.style.height = '18px';
                         checkbox.style.cursor = 'pointer';
                         checkbox.style.accentColor = '#667eea';
                         checkbox.onchange = () => {
@@ -662,8 +1205,7 @@
         function updateStats() {
             let totalChecks = 0;
             let todayChecks = 0;
-            const today = new Date().getDate();
-            let currentDay = Math.min(today, DAYS);
+            let currentDay = getCurrentDayFromStart();
 
             Object.keys(checks).forEach(day => {
                 Object.values(checks[day]).forEach(checked => {
@@ -671,7 +1213,7 @@
                 });
             });
 
-            if (checks[currentDay]) {
+            if (currentDay > 0 && checks[currentDay]) {
                 todayChecks = Object.values(checks[currentDay]).filter(c => c).length;
             }
 
@@ -680,7 +1222,7 @@
 
             document.getElementById('totalChecks').textContent = totalChecks;
             document.getElementById('todayCount').textContent = `${todayChecks}/${tasks.length}`;
-            document.getElementById('currentDay').textContent = currentDay;
+            document.getElementById('currentDay').textContent = currentDay > 0 ? currentDay : 'Not Started';
             document.getElementById('overallProgress').textContent = `${percentage}%`;
             document.getElementById('progressFill').style.width = `${percentage}%`;
         }
@@ -702,7 +1244,7 @@
         }
 
         function exportData() {
-            const data = { tasks, checks };
+            const data = getCombinedData();
             const dataStr = JSON.stringify(data, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -723,15 +1265,12 @@
                 reader.onload = (event) => {
                     try {
                         const data = JSON.parse(event.target.result);
-                        if (data.tasks && data.checks) {
-                            tasks = data.tasks;
-                            checks = data.checks;
-                            saveData();
-                            render();
-                            alert('Data imported successfully!');
-                        } else {
-                            alert('Invalid file format');
-                        }
+                        applyCombinedData(data);
+                        saveData();
+                        saveWeightDataLocal();
+                        renderWeightChart();
+                        render();
+                        alert('Data imported successfully!');
                     } catch (err) {
                         alert('Error reading file: ' + err.message);
                     }
