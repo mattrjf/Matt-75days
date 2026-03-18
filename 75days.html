@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>75 Day Challenge Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button.clear-btn {
+            background: #e74c3c;
+        }
+
+        button.clear-btn:hover {
+            background: #c0392b;
+        }
+
+        .tracker-wrapper {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            left: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .task-name {
+            background: #f8f9fa;
+            font-weight: 500;
+            color: #333;
+            min-width: 150px;
+            word-break: break-word;
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            min-width: 50px;
+        }
+
+        .day-number {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #667eea;
+            transition: transform 0.2s;
+        }
+
+        input[type="checkbox"]:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="checkbox"]:checked {
+            accent-color: #27ae60;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .weight-tracker {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+        }
+
+        .weight-tracker h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .weight-input-wrapper {
+            display: none;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .weight-input-wrapper.active {
+            display: flex;
+        }
+
+        .weight-input-wrapper input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 150px;
+        }
+
+        .weight-input-wrapper input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .weight-input-wrapper input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        #weightChartContainer {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>75 Day Challenge Tracker</h1>
+
+        <div class="weight-tracker">
+            <h3>Weight Loss Tracker</h3>
+            <button onclick="toggleWeightInput()">Enter Weight</button>
+            <div class="weight-input-wrapper" id="weightInputWrapper">
+                <input type="number" id="weightInput" placeholder="Weight (lbs)" step="0.1">
+                <input type="date" id="weightDate">
+                <button onclick="saveWeight()">Save</button>
+                <button onclick="toggleWeightInput()" style="background: #e74c3c;">Cancel</button>
+            </div>
+            <div id="weightChartContainer" style="width: 100%; max-height: 300px;"></div>
+        </div>
+
+        <div class="controls">
+            <button onclick="clearAllChecks()">Clear All Checks</button>
+            <button onclick="exportData()">Export Data</button>
+            <button onclick="importData()">Import Data</button>
+            <button class="clear-btn" onclick="resetChallenge()">Reset Challenge</button>
+        </div>
+
+        <div class="tracker-wrapper">
+            <table id="tracker">
+                <thead>
+                    <tr id="headerRow">
+                        <th class="task-name">Task</th>
+                    </tr>
+                </thead>
+                <tbody id="trackerBody"></tbody>
+            </table>
+        </div>
+
+        <div class="status-bar">
+            <div class="stat-card">
+                <div class="stat-label">Overall Progress</div>
+                <div class="stat-value" id="overallProgress">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Tasks Completed Today</div>
+                <div class="stat-value" id="todayCount">0/7</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Current Day</div>
+                <div class="stat-value" id="currentDay">1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Checkmarks</div>
+                <div class="stat-value" id="totalChecks">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DAYS = 75;
+        const STORAGE_KEY = 'challenge_data';
+
+        let tasks = ['Follow A Healthy Diet', 'Indoor Workout - 45 Mins', 'Outdoor Workout - 45 Mins', 'Drink 1 Gallon Of Water', 'Read 10 Pages Of A Book', 'No Drinking Alcohol', 'Take Progress Pictures'];
+        let checks = {};
+
+        function initStorage() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                tasks = data.tasks || tasks;
+                checks = data.checks || {};
+            } else {
+                resetChecks();
+            }
+        }
+
+        function resetChecks() {
+            checks = {};
+            for (let day = 1; day <= DAYS; day++) {
+                checks[day] = {};
+                tasks.forEach((_, idx) => {
+                    checks[day][idx] = false;
+                });
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ tasks, checks }));
+        }
+
+        // Weight tracking functions
+        const WEIGHT_KEY = 'weight_data';
+        let weightData = [];
+
+        function initWeightData() {
+            const saved = localStorage.getItem(WEIGHT_KEY);
+            if (saved) {
+                weightData = JSON.parse(saved);
+            }
+            renderWeightChart();
+        }
+
+        function toggleWeightInput() {
+            const wrapper = document.getElementById('weightInputWrapper');
+            wrapper.classList.toggle('active');
+            if (wrapper.classList.contains('active')) {
+                document.getElementById('weightDate').valueAsDate = new Date();
+                document.getElementById('weightInput').focus();
+            }
+        }
+
+        function saveWeight() {
+            const weight = parseFloat(document.getElementById('weightInput').value);
+            const dateStr = document.getElementById('weightDate').value;
+            
+            if (!weight || !dateStr) {
+                alert('Please enter both weight and date');
+                return;
+            }
+            
+            // Remove existing entry for same date if any
+            weightData = weightData.filter(entry => entry.date !== dateStr);
+            
+            // Add new entry
+            weightData.push({ date: dateStr, weight: weight });
+            
+            // Sort by date
+            weightData.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Save and render
+            localStorage.setItem(WEIGHT_KEY, JSON.stringify(weightData));
+            renderWeightChart();
+            toggleWeightInput();
+            document.getElementById('weightInput').value = '';
+        }
+
+        function renderWeightChart() {
+            const container = document.getElementById('weightChartContainer');
+            
+            if (weightData.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">No weight entries yet. Click "Enter Weight" to start tracking!</p>';
+                return;
+            }
+            
+            const minWeight = Math.min(...weightData.map(d => d.weight));
+            const maxWeight = Math.max(...weightData.map(d => d.weight));
+            const range = maxWeight - minWeight || 10;
+            const padding = range * 0.1;
+            
+            // Create SVG chart
+            const width = container.offsetWidth - 40;
+            const height = 250;
+            const pointRadius = 5;
+            const graphPadding = 40;
+            
+            let svg = `<svg width="${width}" height="${height}" style="border: 1px solid #ddd; border-radius: 5px;">`;
+            
+            // Y-axis
+            svg += `<line x1="${graphPadding}" y1="10" x2="${graphPadding}" y2="${height - 30}" stroke="#ccc" stroke-width="2"/>`;
+            
+            // X-axis
+            svg += `<line x1="${graphPadding}" y1="${height - 30}" x2="${width - 10}" y2="${height - 30}" stroke="#ccc" stroke-width="2"/>`;
+            
+            // Y-axis labels
+            const minLabel = Math.floor(minWeight - padding);
+            const maxLabel = Math.ceil(maxWeight + padding);
+            for (let w = minLabel; w <= maxLabel; w += Math.ceil(range / 5)) {
+                const y = height - 30 - ((w - minLabel) / (maxLabel - minLabel)) * (height - 40);
+                svg += `<text x="${graphPadding - 35}" y="${y + 5}" font-size="12" text-anchor="end" fill="#666">${w.toFixed(0)}</text>`;
+                svg += `<line x1="${graphPadding - 5}" y1="${y}" x2="${graphPadding}" y2="${y}" stroke="#e0e0e0" stroke-width="1"/>`;
+            }
+            
+            // Plot points and lines
+            const graphWidth = width - graphPadding - 20;
+            const graphHeight = height - 40;
+            
+            for (let i = 0; i < weightData.length; i++) {
+                const x = graphPadding + (i / (weightData.length - 1 || 1)) * graphWidth;
+                const yNorm = (weightData[i].weight - minLabel) / (maxLabel - minLabel);
+                const y = height - 30 - yNorm * graphHeight;
+                
+                // Draw line to next point
+                if (i < weightData.length - 1) {
+                    const nextX = graphPadding + ((i + 1) / (weightData.length - 1)) * graphWidth;
+                    const nextYNorm = (weightData[i + 1].weight - minLabel) / (maxLabel - minLabel);
+                    const nextY = height - 30 - nextYNorm * graphHeight;
+                    svg += `<line x1="${x}" y1="${y}" x2="${nextX}" y2="${nextY}" stroke="#667eea" stroke-width="2"/>`;
+                }
+                
+                // Draw point
+                svg += `<circle cx="${x}" cy="${y}" r="${pointRadius}" fill="#667eea" stroke="white" stroke-width="2"/>`;
+                
+                // Date label
+                const date = new Date(weightData[i].date);
+                const label = (date.getMonth() + 1) + '/' + date.getDate();
+                svg += `<text x="${x}" y="${height - 10}" font-size="11" text-anchor="middle" fill="#666">${label}</text>`;
+            }
+            
+            svg += '</svg>';
+            
+            // Add weight data table
+            let html = svg + '<div style="margin-top: 15px;"><table style="width: 100%; border-collapse: collapse;"><thead><tr style="background: #f0f0f0;"><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Date</th><th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Weight</th><th style="padding: 8px; border: 1px solid #ddd; text-align: center;">Action</th></tr></thead><tbody>';
+            
+            for (let i = weightData.length - 1; i >= 0; i--) {
+                const date = new Date(weightData[i].date);
+                const dateStr = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+                html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${dateStr}</td><td style="padding: 8px; border: 1px solid #ddd;">${weightData[i].weight} lbs</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="deleteWeight(${i})" style="padding: 5px 10px; background: #e74c3c; font-size: 12px;">Delete</button></td></tr>`;
+            }
+            
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
+        function deleteWeight(index) {
+            if (confirm('Delete this weight entry?')) {
+                weightData.splice(index, 1);
+                localStorage.setItem(WEIGHT_KEY, JSON.stringify(weightData));
+                renderWeightChart();
+            }
+        }
+
+        function render() {
+            renderTracker();
+            updateStats();
+        }
+
+        function renderTracker() {
+            const headerRow = document.getElementById('headerRow');
+            const tbody = document.getElementById('trackerBody');
+            
+            // Clear existing columns (keep first)
+            while (headerRow.children.length > 1) {
+                headerRow.removeChild(headerRow.lastChild);
+            }
+            tbody.innerHTML = '';
+
+            // Add day headers
+            for (let day = 1; day <= DAYS; day++) {
+                const th = document.createElement('th');
+                th.className = 'day-header';
+                th.innerHTML = `Day<br><span class="day-number">${day}</span>`;
+                headerRow.appendChild(th);
+            }
+
+            // Add task rows
+            tasks.forEach((task, taskIdx) => {
+                const row = document.createElement('tr');
+                
+                const taskCell = document.createElement('td');
+                taskCell.className = 'task-name';
+                taskCell.textContent = task;
+                row.appendChild(taskCell);
+
+                for (let day = 1; day <= DAYS; day++) {
+                    const cell = document.createElement('td');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = checks[day][taskIdx] || false;
+                    checkbox.onchange = () => {
+                        checks[day][taskIdx] = checkbox.checked;
+                        saveData();
+                        updateStats();
+                    };
+                    cell.appendChild(checkbox);
+                    row.appendChild(cell);
+                }
+
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateStats() {
+            let totalChecks = 0;
+            let todayChecks = 0;
+            const today = new Date().getDate();
+            let currentDay = Math.min(today, DAYS);
+
+            Object.keys(checks).forEach(day => {
+                Object.values(checks[day]).forEach(checked => {
+                    if (checked) totalChecks++;
+                });
+            });
+
+            if (checks[currentDay]) {
+                todayChecks = Object.values(checks[currentDay]).filter(c => c).length;
+            }
+
+            const total = DAYS * tasks.length;
+            const percentage = total > 0 ? Math.round((totalChecks / total) * 100) : 0;
+
+            document.getElementById('totalChecks').textContent = totalChecks;
+            document.getElementById('todayCount').textContent = `${todayChecks}/${tasks.length}`;
+            document.getElementById('currentDay').textContent = currentDay;
+            document.getElementById('overallProgress').textContent = `${percentage}%`;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+        }
+
+        function clearAllChecks() {
+            if (confirm('Are you sure you want to clear all checks?')) {
+                resetChecks();
+                saveData();
+                render();
+            }
+        }
+
+        function resetChallenge() {
+            if (confirm('Are you sure you want to reset the entire challenge? This cannot be undone.')) {
+                resetChecks();
+                saveData();
+                render();
+            }
+        }
+
+        function exportData() {
+            const data = { tasks, checks };
+            const dataStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '75day-challenge-backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        if (data.tasks && data.checks) {
+                            tasks = data.tasks;
+                            checks = data.checks;
+                            saveData();
+                            render();
+                            alert('Data imported successfully!');
+                        } else {
+                            alert('Invalid file format');
+                        }
+                    } catch (err) {
+                        alert('Error reading file: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initStorage();
+            initWeightData();
+            render();
+        });
+    </script>
+</body>
+</html>
