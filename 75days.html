@@ -36,14 +36,27 @@
 
         .controls {
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 50px;
+            margin-top: 80px;
             flex-wrap: wrap;
-            justify-content: center;
+            justify-content: flex-start;
+            padding: 25px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            clear: both;
+            page-break-inside: avoid;
+        }
+
+        .controls button {
+            flex: 0 0 auto;
+            white-space: nowrap;
+            min-width: fit-content;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 16px;
             background: #667eea;
             color: white;
             border: none;
@@ -51,6 +64,8 @@
             cursor: pointer;
             font-size: 14px;
             transition: background 0.3s;
+            white-space: nowrap;
+            min-width: fit-content;
         }
 
         button:hover {
@@ -163,23 +178,34 @@
         }
 
         .weight-tracker {
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 60px;
+            padding: 25px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 2px solid #27ae60;
+            clear: both;
         }
 
         .weight-tracker h3 {
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .weight-tracker > button {
+            margin-bottom: 20px;
+            display: block;
         }
 
         .weight-input-wrapper {
             display: none;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
         }
 
         .weight-input-wrapper.active {
@@ -187,24 +213,24 @@
         }
 
         .weight-input-wrapper input[type="number"] {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 14px;
             width: 150px;
+            flex: 0 0 auto;
         }
 
         .weight-input-wrapper input[type="date"] {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 14px;
+            flex: 0 0 auto;
         }
 
-        .weight-input-wrapper input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        .weight-input-wrapper button {
+            flex: 0 0 auto;
         }
 
         #weightChartContainer {
@@ -212,6 +238,14 @@
             padding: 20px;
             border-radius: 10px;
             border: 1px solid #e0e0e0;
+            clear: both;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        
+        #weightChartContainer svg {
+            max-width: 100%;
+            height: auto;
         }
 
         .progress-bar {
@@ -228,6 +262,56 @@
             background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
             transition: width 0.3s;
         }
+
+        .week-section {
+            margin-bottom: 25px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            clear: both;
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.3s;
+        }
+
+        .week-header:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .week-header .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .week-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .week-content {
+            overflow: hidden;
+            max-height: 1000px;
+            transition: max-height 0.3s ease;
+        }
+
+        .week-content.collapsed {
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .week-content .tracker-wrapper {
+            border: none;
+            border-radius: 0;
+        }
     </style>
 </head>
 <body>
@@ -238,7 +322,7 @@
             <h3>Weight Loss Tracker</h3>
             <button onclick="toggleWeightInput()">Enter Weight</button>
             <div class="weight-input-wrapper" id="weightInputWrapper">
-                <input type="number" id="weightInput" placeholder="Weight (lbs)" step="0.1">
+                <input type="number" id="weightInput" placeholder="Weight (kg)" step="0.1">
                 <input type="date" id="weightDate">
                 <button onclick="saveWeight()">Save</button>
                 <button onclick="toggleWeightInput()" style="background: #e74c3c;">Cancel</button>
@@ -247,22 +331,15 @@
         </div>
 
         <div class="controls">
+            <button onclick="expandAllWeeks()">Expand All Weeks</button>
+            <button onclick="collapseAllWeeks()">Collapse All Weeks</button>
             <button onclick="clearAllChecks()">Clear All Checks</button>
             <button onclick="exportData()">Export Data</button>
             <button onclick="importData()">Import Data</button>
             <button class="clear-btn" onclick="resetChallenge()">Reset Challenge</button>
         </div>
 
-        <div class="tracker-wrapper">
-            <table id="tracker">
-                <thead>
-                    <tr id="headerRow">
-                        <th class="task-name">Task</th>
-                    </tr>
-                </thead>
-                <tbody id="trackerBody"></tbody>
-            </table>
-        </div>
+        <div id="weekContainer"></div>
 
         <div class="status-bar">
             <div class="stat-card">
@@ -435,7 +512,7 @@
             for (let i = weightData.length - 1; i >= 0; i--) {
                 const date = new Date(weightData[i].date);
                 const dateStr = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-                html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${dateStr}</td><td style="padding: 8px; border: 1px solid #ddd;">${weightData[i].weight} lbs</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="deleteWeight(${i})" style="padding: 5px 10px; background: #e74c3c; font-size: 12px;">Delete</button></td></tr>`;
+                html += `<tr><td style="padding: 8px; border: 1px solid #ddd;">${dateStr}</td><td style="padding: 8px; border: 1px solid #ddd;">${weightData[i].weight} kg</td><td style="padding: 8px; border: 1px solid #ddd; text-align: center;"><button onclick="deleteWeight(${i})" style="padding: 5px 10px; background: #e74c3c; font-size: 12px;">Delete</button></td></tr>`;
             }
             
             html += '</tbody></table></div>';
@@ -456,48 +533,130 @@
         }
 
         function renderTracker() {
-            const headerRow = document.getElementById('headerRow');
-            const tbody = document.getElementById('trackerBody');
+            const container = document.getElementById('weekContainer');
+            container.innerHTML = '';
             
-            // Clear existing columns (keep first)
-            while (headerRow.children.length > 1) {
-                headerRow.removeChild(headerRow.lastChild);
-            }
-            tbody.innerHTML = '';
-
-            // Add day headers
-            for (let day = 1; day <= DAYS; day++) {
-                const th = document.createElement('th');
-                th.className = 'day-header';
-                th.innerHTML = `Day<br><span class="day-number">${day}</span>`;
-                headerRow.appendChild(th);
-            }
-
-            // Add task rows
-            tasks.forEach((task, taskIdx) => {
-                const row = document.createElement('tr');
+            // Calculate current week (1-based)
+            const today = new Date().getDate();
+            const currentDay = Math.min(today, DAYS);
+            const currentWeek = Math.ceil(currentDay / 7);
+            
+            // Create 11 weeks
+            const totalWeeks = Math.ceil(DAYS / 7);
+            
+            for (let week = 1; week <= totalWeeks; week++) {
+                const startDay = (week - 1) * 7 + 1;
+                const endDay = Math.min(week * 7, DAYS);
                 
-                const taskCell = document.createElement('td');
-                taskCell.className = 'task-name';
-                taskCell.textContent = task;
-                row.appendChild(taskCell);
-
-                for (let day = 1; day <= DAYS; day++) {
-                    const cell = document.createElement('td');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.checked = checks[day][taskIdx] || false;
-                    checkbox.onchange = () => {
-                        checks[day][taskIdx] = checkbox.checked;
-                        saveData();
-                        updateStats();
-                    };
-                    cell.appendChild(checkbox);
-                    row.appendChild(cell);
+                const weekSection = document.createElement('div');
+                weekSection.className = 'week-section';
+                
+                const weekHeader = document.createElement('div');
+                weekHeader.className = 'week-header' + (week !== currentWeek ? ' collapsed' : '');
+                weekHeader.innerHTML = `<span>Week ${week} (Days ${startDay}-${endDay})</span><span class="toggle-icon">▼</span>`;
+                weekHeader.onclick = () => toggleWeek(weekHeader, weekContent);
+                
+                const weekContent = document.createElement('div');
+                weekContent.className = 'week-content' + (week !== currentWeek ? ' collapsed' : '');
+                
+                // Create table for this week
+                const table = document.createElement('table');
+                table.style.width = '100%';
+                table.style.borderCollapse = 'collapse';
+                table.style.background = 'white';
+                
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                
+                const taskHeader = document.createElement('th');
+                taskHeader.className = 'task-name';
+                taskHeader.textContent = 'Task';
+                taskHeader.style.padding = '15px';
+                taskHeader.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                taskHeader.style.color = 'white';
+                taskHeader.style.fontWeight = '600';
+                taskHeader.style.textAlign = 'left';
+                headerRow.appendChild(taskHeader);
+                
+                // Add day headers for this week
+                for (let day = startDay; day <= endDay; day++) {
+                    const th = document.createElement('th');
+                    th.className = 'day-header';
+                    th.innerHTML = `Day<br><span class="day-number">${day}</span>`;
+                    th.style.padding = '15px';
+                    th.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+                    th.style.color = 'white';
+                    th.style.fontWeight = '600';
+                    th.style.minWidth = '50px';
+                    headerRow.appendChild(th);
                 }
-
-                tbody.appendChild(row);
-            });
+                
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+                
+                // Add task rows
+                const tbody = document.createElement('tbody');
+                tasks.forEach((task, taskIdx) => {
+                    const row = document.createElement('tr');
+                    
+                    const taskCell = document.createElement('td');
+                    taskCell.className = 'task-name';
+                    taskCell.textContent = task;
+                    taskCell.style.padding = '12px';
+                    taskCell.style.border = '1px solid #e0e0e0';
+                    taskCell.style.background = '#f8f9fa';
+                    taskCell.style.fontWeight = '500';
+                    taskCell.style.minWidth = '150px';
+                    row.appendChild(taskCell);
+                    
+                    for (let day = startDay; day <= endDay; day++) {
+                        const cell = document.createElement('td');
+                        cell.style.padding = '12px';
+                        cell.style.border = '1px solid #e0e0e0';
+                        cell.style.textAlign = 'center';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.checked = checks[day][taskIdx] || false;
+                        checkbox.style.width = '24px';
+                        checkbox.style.height = '24px';
+                        checkbox.style.cursor = 'pointer';
+                        checkbox.style.accentColor = '#667eea';
+                        checkbox.onchange = () => {
+                            checks[day][taskIdx] = checkbox.checked;
+                            saveData();
+                            updateStats();
+                        };
+                        
+                        cell.appendChild(checkbox);
+                        row.appendChild(cell);
+                    }
+                    
+                    tbody.appendChild(row);
+                });
+                
+                table.appendChild(tbody);
+                weekContent.appendChild(table);
+                
+                weekSection.appendChild(weekHeader);
+                weekSection.appendChild(weekContent);
+                container.appendChild(weekSection);
+            }
+        }
+        
+        function toggleWeek(header, content) {
+            header.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+        }
+        
+        function expandAllWeeks() {
+            document.querySelectorAll('.week-header').forEach(h => h.classList.remove('collapsed'));
+            document.querySelectorAll('.week-content').forEach(c => c.classList.remove('collapsed'));
+        }
+        
+        function collapseAllWeeks() {
+            document.querySelectorAll('.week-header').forEach(h => h.classList.add('collapsed'));
+            document.querySelectorAll('.week-content').forEach(c => c.classList.add('collapsed'));
         }
 
         function updateStats() {
